@@ -75,6 +75,11 @@ gleam test  # Run the tests
       yield a form of simulated annealing towards the 'true' sentiment
       I was trying to express by voting things up/down.
 
+
+## As a Matter of Taste
+
+TBD, general motivation, goals, and why this library _will_ be *unabashedly **strange*** 
+
 ## License & Terms
 
 Copyright © Avery Quinn 2025

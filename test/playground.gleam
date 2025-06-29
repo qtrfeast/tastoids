@@ -23,10 +23,14 @@ pub fn experiment_tastoids_of_musical_chords_test() {
   todo
 }
 
-pub fn distance_allows_partial_derivatives_test() {
+pub fn hypothesis_distance_allows_partial_derivatives_test() {
   todo
 }
 
-pub fn distance_allows_del_derivatives_test() {
+pub fn hypothesis_distance_allows_del_derivatives_test() {
+  todo
+}
+
+pub fn hypothesis_complex_and_hypercomplex_tastoids_will_be_strange_test() {
   todo
 }
