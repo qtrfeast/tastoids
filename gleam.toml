@@ -1,0 +1,16 @@
+name = "tastoids"
+version = "1.0.0"
+description = "Tastoids are a uniform shape and algebra for reasoning about tastes"
+licences = ["AGPL-3.0-only"]
+ 
+# repository = { type = "github", user = "", repo = "" }
+# links = [{ title = "Website", href = "" }]
+#
+# For a full reference of all the available options, you can have a look at
+# https://gleam.run/writing-gleam/gleam-toml/.
+
+[dependencies]
+gleam_stdlib = ">= 0.44.0 and < 2.0.0"
+
+[dev-dependencies]
+gleeunit = ">= 1.0.0 and < 2.0.0"
