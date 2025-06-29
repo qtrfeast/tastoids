@@ -1,6 +1,8 @@
 /// By no means exhaustive or a full proof, but a decent
 /// approximation for whether I've broken commutivitiy/invertability
-import tastoids.{blend, dislike, like, null, retract}
+import tastoids.{blend, retract}
+import tastoids/from.{dislike, like}
+import tastoids/tastoid.{Tasteless}
 
 pub fn is_associative_test() {
   let a = like("cats")
@@ -14,7 +16,7 @@ pub fn is_associative_test() {
 }
 
 pub fn has_identity_test() {
-  let e = null
+  let e = Tasteless
   let a = like("bread")
 
   let ea = blend(e, a)

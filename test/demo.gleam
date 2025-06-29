@@ -1,7 +1,8 @@
 import gleam/io
 import gleam/list
 import gleam/string
-import tastoids.{blend, dislike, like, retract, squash}
+import tastoids.{blend, retract, squash}
+import tastoids/from.{dislike, like}
 
 pub fn main() -> Nil {
   io.println("Hello, Tastoids!\n")
