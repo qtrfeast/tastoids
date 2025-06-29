@@ -46,63 +46,43 @@
 import gleam/float
 import gleam/int
 import gleam/list
-import gleam/set.{type Set}
-
+import internal/imbedding
 import internal/taste.{type Taste, add, negate, scale}
 
-/// An Embedding is a bijective map of some indexable element
-/// mapped to the index it corresponds to (its _imbex_)
-pub type EmbeddingTo(imbex) {
-  EmbeddingString(fn(String) -> imbex)
-}
+/// An `Imbedding(space)` is a set of index values (imbex,pl: imbices)
+/// shared by a category of `Tastoids`.
+pub type Imbedding(space) =
+  imbedding.Index(space)
 
-/// The _identity_ embedding of strings, mapping each string to itself.
-pub type EmbeddingStringIdentity =
-  EmbeddingTo(String)
-
-/// Any embedding of a string to a consistent integer value.
-pub type EmbeddingStringToInt =
-  EmbeddingTo(Int)
-
-/// An Index(space) is any set of values ⅈ (<= countable ∞),
-/// such as:
-///
-///   - An index `i` within a countable set , e.g. the integers (ℤ),
-///     strings, _any set with a semblance of equality/comparability_.
-///   - An embedding model's range of possible values from 'thing' to index.
-///     (see `Embedding(indexable)`)
-///   - A set of indices within that `Index(space)`
-pub type Index(space) {
-  Index(space)
-  Imbex(embedding: EmbeddingTo(space))
-  Indices(Set(Index(space)))
-}
-
-/// An _identity_ `Index` for strings, mapping a string `s` to itself.
-///
-///  e.g...
-///
-///     "gleam" ↪ Index("gleam") ∈ Index(String)
-pub type ByString =
-  Index(EmbeddingStringIdentity)
-
-/// A `Tastoid(t)` (𝕥) is a subset of Tastoids (𝕋)
-/// constrained to the same _imbedding_ `Index(space)` (𝕚).
-pub opaque type Tastoid(t) {
-  /// A cutesy name for the empty set (shared regardless of index-space)
+/// A `Tastoid` (𝕥) is an element within a subset of Tastoids (𝕋),
+/// constrained to only interact with other tastoids  `of` the same
+/// _imbedding indices_ ( `Imbedding(space)`).
+pub opaque type Tastoid(of) {
+  /// A (cutesy) name for the empty Tastoid (shared by all index-spaces)
+  ///   e.g. `Insipioid <= Nil`
   Insipoid
   // EmptyTastoid(taste: Taste(index))
   /// An impression (or aggregation) of taste
   /// e.g. Tastoid(t) -> Tastoids(t, 1)
-  Tastoid(taste: Taste(t), cardinality: Int)
+  Tastoid(taste: Taste(of), cardinality: Int)
 }
 
 /// The empty `Tastoid`
 pub const null = Insipoid
 
-/// Coerce a `thing` of an into a `Tastoid`
-pub fn from(thing index: Index(space)) -> Tastoid(Index(space)) {
-  taste.from_sentiment(1.0, of: index) |> Tastoid(1)
+/// Coerce a `thing` of an into a `Tastoid`, assuming...
+///
+/// - The `thing`'s type is the `Imbedding(space)` of the `Tastoid`
+/// - The sentiment of that thing is `1.0` ~ a count of its occurances
+///
+/// In effect, `from(thing)` is `1` of that thing, as a `Tastoid`
+/// 
+/// ## Example:
+///
+///     "from" |> tastoid.from -> Tastoid(Taste("from", 1.0"), k=1) 
+///     42     |> tastoid.from -> Tastoid(Taste(42, ))
+pub fn from(thing index: Imbedding(space)) -> Tastoid(Imbedding(space)) {
+  taste.from_one(of: index) |> Tastoid(1)
 }
 
 pub type Impression {
@@ -139,7 +119,7 @@ pub fn from_impression(
   of index: index,
   thought sentiment: Impression,
 ) -> Tastoid(index) {
-  taste.from_sentiment(1.0, of: index) |> from_tasting(thought: sentiment)
+  taste.from_one(of: index) |> from_tasting(thought: sentiment)
 }
 
 /// Coerce a sparse/dense embeddings pair of value and index lists
@@ -224,11 +204,7 @@ pub fn smash(t: Tastoid(index), with u: Tastoid(index)) -> Tastoid(index) {
 }
 
 /// Returns True iff the Tastoids t & u are congruent (weakly equivalent)
-///
-/// *Example*
-///
-///  "cat" |> like
-pub fn equivalent(t: Tastoid(index), u: Tastoid(index)) -> Bool {
+pub fn equal(t: Tastoid(index), u: Tastoid(index)) -> Bool {
   case t, u {
     Insipoid, Insipoid -> True
     _, Insipoid -> False
@@ -236,6 +212,6 @@ pub fn equivalent(t: Tastoid(index), u: Tastoid(index)) -> Bool {
     Tastoid(t, k_t), Tastoid(u, k_u) if k_t == k_u -> {
       t == u
     }
-    t, u -> equivalent(squash(t), squash(u))
+    t, u -> equal(squash(t), squash(u))
   }
 }

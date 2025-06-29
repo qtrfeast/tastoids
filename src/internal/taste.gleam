@@ -1,27 +1,33 @@
+//// Tastes, broadly are any indexable sentiment (or lack thereof),
+//// able to participate in the Tastoid algebra 
+////
+//// Apart from the 0-ideal/`Nil` taste (`tasteless`), Tastes must share a
+//// given index(-space) i.e. strings, Ints, or sets/combinations thereof
+////
+//// More algebraically:
+//// 
+//// Consider that the set of all Vectors are a field ℝⁿ (aka 𝕍),
+//// 
+//// AND  i  is an enumerable (countable) set of indices (ⅈ),
+//// AND  imbed: 𝔸(..) ->  aᵢ  is a bijective imbedding of 'a'
+////                            subject into 𝕍/ⅈ  
+////
+//// Then,  𝛂aᵢ ∈ 𝔸  are the set of all 'unit' `tastes` (scaled by 𝛂)
+
 import gleam/dict.{type Dict, map_values, upsert}
 import gleam/float
 import gleam/option.{None, Some}
 
-/// Tastes, broadly are any indexable sentiment (or lack thereof),
-/// able to participate in the Tastoid algebra 
-///
-/// Apart from the 0-ideal/`Nil` taste (`tasteless`), Tastes must share a
-/// given index(-space) i.e. strings, Ints, or sets/combinations thereof
-///
-/// More algebraically:
-/// 
-/// Consider that the set of all Vectors are a field ℝⁿ (aka 𝕍),
-/// 
-/// AND  i  is an enumerable (countable) set of indices (ⅈ),
-/// AND  imbed: 𝔸(..) ->  aᵢ  is a bijective imbedding of 'a'
-///                            subject into 𝕍/ⅈ  
-///
-/// Then,  𝛂aᵢ ∈ 𝔸  are the set of all 'unit' `tastes` (scaled by 𝛂)
+// I'd like to parameterize Taste by Int/Float (tbd...)
+type Value =
+  Float
+
+/// A `Taste` of a given `index` with `value`s sharing the same types.
 pub opaque type Taste(index) {
   /// Universal Identity / 0
   Nil
-  Taste(index, sentiment: Float)
-  Tastes(tastes: Dict(index, Float))
+  Taste(of: index, was: Value)
+  Tastes(tastes: Dict(index, Value))
   // Idea: BroadTastes (each tᵢ has its own k, don't diminish others)
   // Idea: ImmutableTaste(sentiment | index->sentiment) -- unchanging
   // Idea: ComplexTaste (allow tastes values to complex (mod n))
@@ -31,16 +37,16 @@ pub opaque type Taste(index) {
 /// Alias for `Nil`, the empty taste—sans index—shared by every embedding-space
 pub const tasteless = Nil
 
-// Return a Taste(index, sentiment)
-pub fn from_sentiment(sentiment: Float, of index: index) -> Taste(index) {
-  case sentiment {
-    0.0 -> tasteless
-    _ -> Taste(index, sentiment)
-  }
+/// A taste sentiment of 1.0
+pub const one = 1.0
+
+/// Return a singular of 'index', a la `Taste(index, 1.0)`
+pub fn from_one(of index: index) -> Taste(index) {
+  Taste(of: index, was: 1.0)
 }
 
-/// Return a Taste(...) composed of the indexed sentiments.
-pub fn from_tuples(from indexed_tastes: List(#(index, Float))) -> Taste(index) {
+/// Return a `Tastes(index)` consisting of the provided #(index, value: Float) tuples.
+pub fn from_tuples(from indexed_tastes: List(#(index, Value))) -> Taste(index) {
   dict.from_list(indexed_tastes) |> Tastes
 }
 
@@ -56,7 +62,11 @@ fn scaling_values(by weight: Float) {
 }
 
 /// Scale the given tastes by its 'weight' (relative to its 'natural' values)
-/// a la scalar multiplication
+/// a la scalar multiplication.
+///
+/// _Note from Avery: While this could be accomplished via a Tastoid's cardinality,
+///  I wanted keep the notion of a signal's 'worth' (the _scale_ of its impression)
+///  distinct from how many of them there are_
 pub fn scale(taste: Taste(index), by weight: Float) -> Taste(index) {
   let scale_by_weight = fn(sentiment: Float) {
     float.multiply(sentiment, weight)
@@ -71,7 +81,7 @@ pub fn scale(taste: Taste(index), by weight: Float) -> Taste(index) {
 }
 
 /// Internal: Short-hand for `dict.filter` keeping only non-zero tastes
-fn non_zeroes(_, t: Float) {
+fn non_zeroes(_, t: Value) {
   t != 0.0
 }
 
