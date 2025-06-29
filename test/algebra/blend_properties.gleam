@@ -1,3 +1,5 @@
+/// By no means exhaustive or a full proof, but a decent
+/// approximation for whether I've broken commutivitiy/invertability
 import tastoids.{blend, dislike, like, null, retract}
 
 pub fn is_associative_test() {

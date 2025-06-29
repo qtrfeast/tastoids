@@ -68,6 +68,13 @@ gleam run   # Run the project
 gleam test  # Run the tests
 ```
 
+### TODO
+
+- [ ] Write a euclidian and cosine distance fn.
+- [ ] Demonstrate how Tastoids + a vector db and iterative voting
+      yield a form of simulated annealing towards the 'true' sentiment
+      I was trying to express by voting things up/down.
+
 ## License & Terms
 
 Copyright © Avery Quinn 2025

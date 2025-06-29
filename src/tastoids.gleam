@@ -89,7 +89,7 @@ import gleam/list
 import internal/imbedding
 import internal/taste.{type Taste, add, negate, scale}
 
-/// An `Imbedding(space)` is a set of index values (imbex,pl: imbices)
+/// An `Imbedding(space)` is a set of imbedding index values (i.e. an _imbex_)
 /// shared by a category of `Tastoids`.
 pub type Imbedding(space) =
   imbedding.Index(space)
