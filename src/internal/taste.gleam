@@ -28,19 +28,19 @@ pub opaque type Taste(index) {
   // Idea: ... TastoidsTaste({set of i in 𝕥}: 𝕥)! (I'd bet it'll work)
 }
 
-/// The empty taste, sans index, and thus shared by every embedding-space
+/// Alias for `Nil`, the empty taste—sans index—shared by every embedding-space
 pub const tasteless = Nil
 
 // Return a Taste(index, sentiment)
-pub fn taste(of index: index, was sentiment: Float) -> Taste(index) {
+pub fn from_sentiment(sentiment: Float, of index: index) -> Taste(index) {
   case sentiment {
     0.0 -> tasteless
     _ -> Taste(index, sentiment)
   }
 }
 
-/// Return a Tastes(...) composed of the indexed sentiments.
-pub fn tasting(from indexed_tastes: List(#(index, Float))) -> Taste(index) {
+/// Return a Taste(...) composed of the indexed sentiments.
+pub fn from_tuples(from indexed_tastes: List(#(index, Float))) -> Taste(index) {
   dict.from_list(indexed_tastes) |> Tastes
 }
 
@@ -56,7 +56,7 @@ fn scaling_values(by weight: Float) {
 }
 
 /// Scale the given tastes by its 'weight' (relative to its 'natural' values)
-///  aka scalar multiplication
+/// a la scalar multiplication
 pub fn scale(taste: Taste(index), by weight: Float) -> Taste(index) {
   let scale_by_weight = fn(sentiment: Float) {
     float.multiply(sentiment, weight)
@@ -100,21 +100,21 @@ fn deflate(taste t: Taste(index)) {
 }
 
 /// Combine two tastes, linearly adding their sentiments (per index)
-pub fn scalar_add(taste t: Taste(index), to u: Taste(index)) -> Taste(index) {
+/// a la 'scalar addition'
+pub fn add(taste t: Taste(index), to u: Taste(index)) -> Taste(index) {
   let sum = case t, u {
     // Adding two single tastes of the same index adds them directly
-    Taste(index_t, sentiment_t), Taste(index_u, sentiment_u)
-      if index_t == index_u
-    -> Taste(index_t, float.add(sentiment_t, sentiment_u)) |> deflate
+    Taste(t_i, sentiment_t), Taste(index_u, sentiment_u) if t_i == index_u ->
+      Taste(t_i, float.add(sentiment_t, sentiment_u)) |> deflate
 
     // Joining two single tastes of different indices yields a Tastes
-    Taste(index_t, sentiment_t), Taste(index_u, sentiment_u) ->
-      dict.from_list([#(index_t, sentiment_t), #(index_u, sentiment_u)])
+    Taste(t_i, sentiment_t), Taste(index_u, sentiment_u) ->
+      dict.from_list([#(t_i, sentiment_t), #(index_u, sentiment_u)])
       |> dict.filter(keeping: non_zeroes)
       |> Tastes
 
     // An existing tastes upserts new singular tastes
-    Taste(_, _), Tastes(_) -> scalar_add(u, t)
+    Taste(_, _), Tastes(_) -> add(u, t)
     Tastes(ts), Taste(index_u, sentiment_u) ->
       upsert(ts, index_u, fn(sentiment_t) {
         case sentiment_t {
@@ -140,9 +140,6 @@ pub fn scalar_add(taste t: Taste(index), to u: Taste(index)) -> Taste(index) {
 
   sum |> deflate
 }
-
-/// Alias to `scalar_add`. Combine the tastes sentiments present 
-pub const add = scalar_add
 
 /// Returns the 'negative' of a taste (like <-> dislike)
 pub fn negate(t: Taste(index)) -> Taste(index) {

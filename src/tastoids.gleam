@@ -1,64 +1,109 @@
+//// Tastoids (& their 'Temperate' Algebra)
+////
+////  "Taste", broadly, is a 'sentiment' about a unique thing.  
+////
+//// It is often said, one can't compare "apples" to "oranges",
+//// but I daresay.. perhaps you can?  Let me show you how.
+////
+//// An indexable sentiment (or lack thereof), able to participate in
+//// the Tastoid algebraic operations
+//// 
+//// Given, the set of all Vectors are a field ℝⁿ (aka 𝕍),
+//// 
+//// AND  i  is an enumerable set of indices (ⅈ <= countable ∞) 
+////                  (loosely, a 'taste' field)
+////
+//// Then,  𝛂aᵢ ∈ 𝔸  are the set of all 'unit' `tastes` (scaled by 𝛂)
+////
+////   ** Try to guess what happens if your imbedding is 'flat',
+////      mapping 'a' word directly to itself with value 1?
+////
+//// If,   we partition a taste-field further, by a (complex) cardinality  k ∈ 𝕂 (𝕂 ~ ℝ x ℝ₄ ~ ℂ)
+////  AND   a _tasting_ of some 'i' (by subject 'u') with weight (𝛂) and count (k)
+////        'Imbed' an individual's sentiment as a 'Tastoid'   𝕥ᵤ↪ᵢ ∈ 𝕋
+////
+////   i.e.  someone (or thing) expressing       {    by like ( 1+i )   ->  dislike (-1 + i)
+////     𝕒 taste (valued at weight 𝛂), k times     -> un-like (-1 + -i) -> un-dislike (1 + -i) } 
+////
+////
+////  Then, we may define a handful a tiny, tidy, yet supremely powerful (σ/sigma-)
+////    _Algebra_ of Taste_
+//// 
+////  (A thorough reckoning of its axioms will take time, learning, and discourse with others;
+////   suffice to say I mean a formal category-theory 'Algebra' with several handy properties,
+////   notably invertible, self-integrating distillation of an 'average' taste!)
+////   
+////   - add(t¹, u¹) -> (t + u)¹       ('regular' properties of scalar vector addition)
+////   - scale(tⁿ, k)   -> tⁿᵏ         ('regular' properties of scalar vector multiplication)
+////   - blend(t¹, u¹))  ->  (t + u)²  ('tensor' product;  associative, distributive, commutative, invertable)
+////       (equiv. to)  ~> (½t + ½u)¹
+////   - squash(tᵏ, p)  ->   ||t||ₚ   ( for p =0, yields the unipotent norm--i.e. every sparse tᵢ -> 1
+////                                        p==1, yields the normal tastoid (weighted power mean)
+////                                        p!=0, yields the p-norm of t with k=p )
+
+// AND  𝔸  is a bijective imbedding of 'a' subject into 𝕍/ⅈ
+
 import gleam/float
 import gleam/int
-import gleam/io
 import gleam/list
+import gleam/set.{type Set}
 
-import internal/taste.{type Taste, add, negate, scale, taste, tasting}
+import internal/taste.{type Taste, add, negate, scale}
 
-/// Tastoids (& their algebra)
+/// An Embedding is a bijective map of some indexable element
+/// mapped to the index it corresponds to (its _imbex_)
+pub type EmbeddingTo(imbex) {
+  EmbeddingString(fn(String) -> imbex)
+}
+
+/// The _identity_ embedding of strings, mapping each string to itself.
+pub type EmbeddingStringIdentity =
+  EmbeddingTo(String)
+
+/// Any embedding of a string to a consistent integer value.
+pub type EmbeddingStringToInt =
+  EmbeddingTo(Int)
+
+/// An Index(space) is any set of values ⅈ (<= countable ∞),
+/// such as:
 ///
-///  "Taste", broadly, is a 'sentiment' about a unique thing.  
+///   - An index `i` within a countable set , e.g. the integers (ℤ),
+///     strings, _any set with a semblance of equality/comparability_.
+///   - An embedding model's range of possible values from 'thing' to index.
+///     (see `Embedding(indexable)`)
+///   - A set of indices within that `Index(space)`
+pub type Index(space) {
+  Index(space)
+  Imbex(embedding: EmbeddingTo(space))
+  Indices(Set(Index(space)))
+}
+
+/// An _identity_ `Index` for strings, mapping a string `s` to itself.
 ///
-/// It is often said, one can't compare "apples" to "oranges",
-/// but I daresay.. perhaps you can?  Let me show you how.
+///  e.g...
 ///
-/// An indexable sentiment (or lack thereof), able to participate in
-/// the Tastoid algebraic operations
-/// 
-/// Given, the set of all Vectors are a field ℝⁿ (aka 𝕍),
-/// 
-/// AND  i  is an enumerable set of indices (ⅈ <= countable ∞) 
-/// AND  𝔸  is a bijective imbedding of 'a' subject into 𝕍/ⅈ
-///                  (loosely, a 'taste' field)
-///
-/// Then,  𝛂aᵢ ∈ 𝔸  are the set of all 'unit' `tastes` (scaled by 𝛂)
-///
-///   ** Try to guess what happens if your imbedding is 'flat',
-///      mapping 'a' word directly to itself with value 1?
-///
-/// If,   we partition a taste-field further, by a (complex) cardinality  k ∈ 𝕂 (𝕂 ~ ℝ x ℝ₄ ~ ℂ)
-///  AND   a _tasting_ of some 'i' (by subject 'u') with weight (𝛂) and count (k)
-///        'Imbed' an individual's sentiment as a 'Tastoid'   𝕥ᵤ↪ᵢ ∈ 𝕋
-///
-///   i.e.  someone (or thing) expressing       {    by like ( 1+i )   ->  dislike (-1 + i)
-///     𝕒 taste (valued at weight 𝛂), k times     -> un-like (-1 + -i) -> un-dislike (1 + -i) } 
-///
-///
-///  Then, we may define a handful a tiny, tidy, yet supremely powerful (σ/sigma-)
-///    _Algebra_ of Taste_
-/// 
-///  (A thorough reckoning of its axioms will take time, learning, and discourse with others;
-///   suffice to say I mean a formal category-theory 'Algebra' with several handy properties,
-///   notably invertible, self-integrating distillation of an 'average' taste!)
-///   
-///   - add(t¹, u¹) -> (t + u)¹       ('regular' properties of scalar vector addition)
-///   - scale(tⁿ, k)   -> tⁿᵏ         ('regular' properties of scalar vector multiplication)
-///   - blend(t¹, u¹))  ->  (t + u)²  ('tensor' product;  associative, distributive, commutative, invertable)
-///       (equiv. to)  ~> (½t + ½u)¹
-///   - squash(tᵏ, p)  ->   ||t||ₚ   ( for p =0, yields the unipotent norm--i.e. every sparse tᵢ -> 1
-///                                        p==1, yields the normal tastoid (weighted power mean)
-///                                        p!=0, yields the p-norm of t with k=p )
-pub opaque type Tastoid(index) {
+///     "gleam" ↪ Index("gleam") ∈ Index(String)
+pub type ByString =
+  Index(EmbeddingStringIdentity)
+
+/// A `Tastoid(t)` (𝕥) is a subset of Tastoids (𝕋)
+/// constrained to the same _imbedding_ `Index(space)` (𝕚).
+pub opaque type Tastoid(t) {
   /// A cutesy name for the empty set (shared regardless of index-space)
   Insipoid
   // EmptyTastoid(taste: Taste(index))
   /// An impression (or aggregation) of taste
   /// e.g. Tastoid(t) -> Tastoids(t, 1)
-  Tastoid(taste: Taste(index), cardinality: Int)
+  Tastoid(taste: Taste(t), cardinality: Int)
 }
 
 /// The empty `Tastoid`
 pub const null = Insipoid
+
+/// Coerce a `thing` of an into a `Tastoid`
+pub fn from(thing index: Index(space)) -> Tastoid(Index(space)) {
+  taste.from_sentiment(1.0, of: index) |> Tastoid(1)
+}
 
 pub type Impression {
   /// I liked it, +1
@@ -88,13 +133,13 @@ pub fn from_tasting(
   }
 }
 
-/// Given any index (string, Int, or Set(index)), coerce it into
+/// Given any index (`string`, `Int`, or `Set(index)``), coerce it into
 /// a simple Tastoid worth a single contribution (k=1)
 pub fn from_impression(
   of index: index,
   thought sentiment: Impression,
 ) -> Tastoid(index) {
-  taste(of: index, was: 1.0) |> from_tasting(thought: sentiment)
+  taste.from_sentiment(1.0, of: index) |> from_tasting(thought: sentiment)
 }
 
 /// Coerce a sparse/dense embeddings pair of value and index lists
@@ -105,26 +150,26 @@ pub fn from_sparse_embedding(
   thought sentiment: Impression,
 ) -> Tastoid(index) {
   list.zip(indices, values)
-  |> tasting
+  |> taste.from_tuples
   |> from_tasting(thought: sentiment)
 }
 
-/// Coerce any index value into a simple Tastoid with sentiment 1.0
+/// Coerce any `index` value into a simple `Tastoid` with sentiment 1.0
 pub fn like(this index: index) -> Tastoid(index) {
   from_impression(of: index, thought: Yum)
 }
 
-/// Coerce any index value into a simple Tastoid with sentiment -1.0
+/// Coerce any `index` value into a simple `Tastoid` with sentiment -1.0
 pub fn dislike(this index: index) -> Tastoid(index) {
   from_impression(of: index, thought: Yuck)
 }
 
-/// Coerce any index value into a simple Tastoid with sentiment -0.05 >
+/// Coerce any `index` value into a simple `Tastoid` with sentiment -0.05 >
 pub fn meh(this index: index) -> Tastoid(index) {
   from_impression(of: index, thought: Meh)
 }
 
-/// Coerce any index value into a simple Tastoid with no sentiment or
+/// Coerce any `index` value into a simple `Tastoid` with no sentiment or
 /// contribution (the empty tastoid/`Insipoid`)
 pub fn pass(this index: index) -> Tastoid(index) {
   from_impression(of: index, thought: Pass)
@@ -193,39 +238,4 @@ pub fn equivalent(t: Tastoid(index), u: Tastoid(index)) -> Bool {
     }
     t, u -> equivalent(squash(t), squash(u))
   }
-}
-
-import gleam/string
-
-pub fn main() -> Nil {
-  io.println("Hello, Tastoids!\n")
-
-  let like_apples = like("apples") |> echo
-  // ↪ Tastoid(Taste("cats", 1.0), 1)
-  let dislike_oranges = dislike("oranges") |> echo
-  //  ↪ Tastoid(Taste("cats", 1.0), 1)
-
-  io.println("\n Blend into ...")
-  let tastes = blend(like_apples, dislike_oranges) |> echo
-
-  io.println("\n Squash to an average of ...")
-  squash(tastes) |> echo
-
-  io.println("\n\n Blend is also invertible!  Retracting a dislike...")
-  let undo_dislike = dislike_oranges |> retract |> echo
-  io.println(" ... which blends-*out* the original dislike")
-  blend(tastes, undo_dislike) |> echo
-
-  io.println(
-    "\n\n'Blue Blue Brown Blue' |> split(' ') |> map(like) |> reduce(join) ",
-  )
-  io.print("↪ ")
-  let _ =
-    "Blue Blue Brown Blue"
-    |> string.split(" ")
-    |> list.map(fn(word) { like(word) })
-    |> list.reduce(blend)
-    |> echo
-
-  io.println("Done")
 }
