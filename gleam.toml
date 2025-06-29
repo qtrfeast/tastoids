@@ -1,9 +1,10 @@
 name = "tastoids"
 version = "1.0.0"
-description = "Tastoids are a uniform shape and algebra for reasoning about tastes"
+description = "Tastoids are a uniform abstraction of 'taste' and Algebra thereof."
 licences = ["AGPL-3.0-only"]
  
-# repository = { type = "github", user = "", repo = "" }
+repository = { type = "github", user = "avescodes", repo = "tastoids.gleam" }
+ 
 # links = [{ title = "Website", href = "" }]
 #
 # For a full reference of all the available options, you can have a look at

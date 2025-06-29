@@ -1,47 +1,87 @@
 //// Tastoids (& their 'Temperate' Algebra)
 ////
-////  "Taste", broadly, is a 'sentiment' about a unique thing.  
-////
 //// It is often said, one can't compare "apples" to "oranges",
-//// but I daresay.. perhaps you can?  Let me show you how.
+//// but I daresay.. _perhaps you can?_
 ////
-//// An indexable sentiment (or lack thereof), able to participate in
-//// the Tastoid algebraic operations
+////   **Let me show you how.**
+////
+//// On their own, it is hard to figure how one might compare apples to oranges,
+//// let alone deign to approach a calculus of taste however, with _just enough_
+//// structure , a **Taste** can become a **Tastoid**, along with a curious and powerful
+////  _Temperate_ Algebra.
+////
+//// > Not unlike a [_Tropical_ geometry](https://en.wikipedia.org/wiki/Tropical_geometry),
+//// > where the notion of addition and multiplication are replaced by min(a,b) & add(a,b),
+//// > I pose that a _Temperate Algebra_ is one whose typical notions of (+,×) are replaced
+//// > with operations that effectively 'average' taste (with commutativity, distributivity
+//// > and reversibility, no less!)
 //// 
-//// Given, the set of all Vectors are a field ℝⁿ (aka 𝕍),
+////  ### A Taste (t) Field
+//// "Tastes", broadly, are any measurable/comparable sentiment about a thing. Something
+//// with a unique direction and magnitude. _A vector!_
 //// 
-//// AND  i  is an enumerable set of indices (ⅈ <= countable ∞) 
-////                  (loosely, a 'taste' field)
+//// Consider if you will, then:
 ////
-//// Then,  𝛂aᵢ ∈ 𝔸  are the set of all 'unit' `tastes` (scaled by 𝛂)
+////  - The set of all Vectors are a field ℝⁿ (aka 𝕍).
+////  - You may partition 𝕍 by some enumerable set of indices (as ⅈ <= countable ∞))
+////  - The '[Algebraic extension](https://en.wikipedia.org/wiki/Algebraic_extension)'
+////    of 𝕍/ⅈ, is itself a field (with Algebra)
 ////
-////   ** Try to guess what happens if your imbedding is 'flat',
-////      mapping 'a' word directly to itself with value 1?
+//// > In the context of large-language- and embedding-models, this idea of mapping _things_
+//// > (text or otherwise) into a well-defined set of possible indices and probabilities is
+//// > referred to as an '_embedding_'.
 ////
-//// If,   we partition a taste-field further, by a (complex) cardinality  k ∈ 𝕂 (𝕂 ~ ℝ x ℝ₄ ~ ℂ)
-////  AND   a _tasting_ of some 'i' (by subject 'u') with weight (𝛂) and count (k)
-////        'Imbed' an individual's sentiment as a 'Tastoid'   𝕥ᵤ↪ᵢ ∈ 𝕋
+//// ### A Taste -> One Tastoid
 ////
-////   i.e.  someone (or thing) expressing       {    by like ( 1+i )   ->  dislike (-1 + i)
-////     𝕒 taste (valued at weight 𝛂), k times     -> un-like (-1 + -i) -> un-dislike (1 + -i) } 
+//// We're almost there, I promise. Lets talk about plain numbers for a bit; say I told you
+//// knew the average of some set of values was 42. You also know for a fact there was a 13
+//// in there once, somewhere.
 ////
+//// Knowing nothing else, how would you _un_-average 13 from 42?
+////
+//// _Were there two values that averaged to 42? Three? More?_
+////
+//// Without the _cardinality_ of the original sampling, its (absolutely) impossible to know.
+//// But with it... say n=13, in which case, we can merely remove 1/13th of 13 (i.e. 1)
+//// from our combined average to find out the average without that 13 was just 41.
+////
+//// Similarly, on their own Taste vectors _are_ comparable, even averagable in some sense,
+//// but without a cardinality, their operations aren't quite _lined up_ to have solutions
+//// to previously impossible questions become possible and yield seemingly 'free' results.
+////
+//// Attempting to put some formalism to the above,
+//// 
+////   - We can partition a taste-field further, by its cardinality k ∈ 𝕂 (𝕂 ~ ℝ x ℝ₄ ~ ℂ)
+////     (As well as a 4-cycle of like -> dislike -> unlike -> undislike)
+//// 
+////     i.e.  someone (or thing) expressing      {    like ( 1+i )     ->  dislike (-1 + i)
+////       𝕒 taste (valued at weight w), k times   -> un-like (-1 + -i) -> un-dislike (1 + -i) } 
+//// A Tastoid, can be arrived at by a person/subject, expressing a taste _once_ (tᵢ, k=1), 
+//// imbedding (sic) that individuals' sentiment in a univesal/possibly infinite set of all
+//// the tastoid's that subject could express 𝕥ᵤ↪ᵢ ∈ 𝕋ᵤ
 ////
 ////  Then, we may define a handful a tiny, tidy, yet supremely powerful (σ/sigma-)
 ////    _Algebra_ of Taste_
-//// 
-////  (A thorough reckoning of its axioms will take time, learning, and discourse with others;
-////   suffice to say I mean a formal category-theory 'Algebra' with several handy properties,
-////   notably invertible, self-integrating distillation of an 'average' taste!)
-////   
-////   - add(t¹, u¹) -> (t + u)¹       ('regular' properties of scalar vector addition)
-////   - scale(tⁿ, k)   -> tⁿᵏ         ('regular' properties of scalar vector multiplication)
-////   - blend(t¹, u¹))  ->  (t + u)²  ('tensor' product;  associative, distributive, commutative, invertable)
-////       (equiv. to)  ~> (½t + ½u)¹
-////   - squash(tᵏ, p)  ->   ||t||ₚ   ( for p =0, yields the unipotent norm--i.e. every sparse tᵢ -> 1
-////                                        p==1, yields the normal tastoid (weighted power mean)
-////                                        p!=0, yields the p-norm of t with k=p )
+////
+//// - [ ] Brief introduction to operators
 
-// AND  𝔸  is a bijective imbedding of 'a' subject into 𝕍/ⅈ
+// 
+// ### Operations
+//
+//  - [ ] Tidy this up with all the more recent changes; probably into a more formal
+//        'proof'ing ground
+// 
+//  (A thorough reckoning of its axioms will take time, learning, and discourse with others;
+//   suffice to say I mean a formal category-theory 'Algebra' with several handy properties,
+//   notably invertible, self-integrating distillation of an 'average' taste!)
+//   
+//   - add(t¹, u¹) -> (t + u)¹       ('regular' properties of scalar vector addition)
+//   - scale(tⁿ, k)   -> tⁿᵏ         ('regular' properties of scalar vector multiplication)
+//   - blend(t¹, u¹))  ->  (t + u)²  ('tensor' product;  associative, distributive, commutative, invertable)
+//       (equiv. to)  ~> (½t + ½u)¹
+//   - squash(tᵏ, p)  ->   ||t||ₚ   ( for p =0, yields the unipotent norm--i.e. every sparse tᵢ -> 1
+//                                        p==1, yields the normal tastoid (weighted power mean)
+//                                        p!=0, yields the p-norm of t with k=p )
 
 import gleam/float
 import gleam/int
