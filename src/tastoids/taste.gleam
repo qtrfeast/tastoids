@@ -7,16 +7,15 @@
 //// More algebraically:
 //// 
 //// Consider that the set of all Vectors are a field ℝⁿ (aka 𝕍),
-//// 
-//// AND  i  is an enumerable (countable) set of indices (ⅈ),
-//// AND  imbed: 𝔸(..) ->  aᵢ  is a bijective imbedding of 'a'
-////                            subject into 𝕍/ⅈ  
+//// AND  i is an enumerable (countable) set of indices (ⅈ) with
+//// `imbed(a ∈ 𝔸) ->  aᵢ` (a bijective imbedding of 'a' subject into 𝕍/ⅈ)
 ////
 //// Then,  𝛂aᵢ ∈ 𝔸  are the set of all 'unit' `tastes` (scaled by 𝛂)
 
-import gleam/dict.{type Dict, map_values, upsert}
+import gleam/dict.{type Dict, fold, map_values, upsert}
 import gleam/float
 import gleam/option.{None, Some}
+import gleam/set.{type Set}
 
 // I'd like to parameterize Taste by Int/Float (tbd...)
 type Value =
@@ -36,9 +35,6 @@ pub opaque type Taste(index) {
 
 /// Alias for `Nil`, the empty taste—sans index—shared by every embedding-space
 pub const tasteless = Nil
-
-/// A taste sentiment of 1.0
-pub const one = 1.0
 
 /// Return a singular of 'index', a la `Taste(index, 1.0)`
 pub fn from_one(of index: index) -> Taste(index) {
@@ -61,12 +57,12 @@ fn scaling_values(by weight: Float) {
   fn(_, sentiment) { sentiment |> scaled }
 }
 
-/// Scale the given tastes by its 'weight' (relative to its 'natural' values)
-/// a la scalar multiplication.
+/// Scale the given tastes by a portion (_weight_)–relative to its
+///'natural' values–a la scalar multiplication.
 ///
-/// _Note from Avery: While this could be accomplished via a Tastoid's cardinality,
-///  I wanted keep the notion of a signal's 'worth' (the _scale_ of its impression)
-///  distinct from how many of them there are_
+/// _Note from Avery: While this could be accomplished via a Tastoid's
+/// cardinality, I wanted keep the notion of a signal's 'worth' (the
+///_scale_ of its impression) distinct from its quantity.
 pub fn scale(taste: Taste(index), by weight: Float) -> Taste(index) {
   let scale_by_weight = fn(sentiment: Float) {
     float.multiply(sentiment, weight)
@@ -160,4 +156,63 @@ pub fn negate(t: Taste(index)) -> Taste(index) {
     Taste(i, sentiment) -> Taste(i, float.negate(sentiment))
     Nil -> t
   }
+}
+
+/// Return the _and_-ish product of two tastes. Multiplying the
+/// indices between—possibly sparse—amplifying shared indices and
+/// nullifying ones they don't (i.e. they were multiplied by zero).
+pub fn multiply(t: Taste(space), by u: Taste(space)) -> Taste(space) {
+  case t, u {
+    Nil, _ -> Nil
+    _, Nil -> Nil
+    // Misaligned singular Tastes cancel-out (implied x 0)
+    Taste(i1, _), Taste(i2, _) if i1 != i2 -> Nil
+    // Aligned singular Taste(s) multiply normally.
+    Taste(i, t1), Taste(_i, t2) -> Taste(i, float.multiply(t1, t2))
+    // One-to-many multiplication is fairly direct
+    Taste(_, _), Tastes(_) -> multiply(u, t)
+    Tastes(ts), Taste(i, t1) -> {
+      case dict.get(ts, i) {
+        Ok(t2) ->
+          case t2 {
+            0.0 -> Nil
+            _ -> Taste(i, float.multiply(t1, t2))
+          }
+        Error(_) -> Nil
+      }
+    }
+    Tastes(ts1), Tastes(ts2) -> {
+      dict.combine(ts1, ts2, float.multiply)
+      |> dict.filter(keeping: non_zeroes)
+      |> Tastes
+    }
+  }
+}
+
+/// Returns the combined sentiments of the entire Taste.
+pub fn length(of taste: Taste(index)) -> Value {
+  case taste {
+    Tastes(ts) ->
+      fold(ts, 0.0, fn(sum, _index, sentiment) {
+        sentiment |> float.absolute_value |> float.add(sum)
+      })
+    Taste(_, sentiment) -> sentiment
+    Nil -> 0.0
+  }
+}
+
+/// Returns the combined set of sentiment indices of a Taste
+pub fn indices(of taste: Taste(index)) -> Set(index) {
+  case taste {
+    Tastes(ts) -> ts |> dict.keys |> set.from_list
+    Taste(i, _) -> set.from_list([i])
+    Nil -> set.new()
+  }
+}
+
+/// Returns a combined taste, where n taste indices become one set of its
+/// indices, with its value representing the sum of their sentiments.
+pub fn condense(taste: Taste(index)) -> Taste(Set(index)) {
+  let sum = length(taste)
+  Taste(indices(of: taste), sum)
 }
