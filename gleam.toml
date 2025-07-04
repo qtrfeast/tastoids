@@ -1,5 +1,5 @@
 name = "tastoids"
-version = "1.0.0"
+version = "1.1.0"
 description = "Tastoids are a uniform abstraction of 'taste' and Algebra thereof."
 licences = ["AGPL-3.0-only"]
  
@@ -15,3 +15,4 @@ gleam_stdlib = ">= 0.44.0 and < 2.0.0"
 
 [dev-dependencies]
 gleeunit = ">= 1.5.1 and < 2.0.0"
+gleamy_bench = ">= 0.6.0 and < 1.0.0"

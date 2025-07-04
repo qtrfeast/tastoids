@@ -71,9 +71,8 @@ pub fn from_impression(
 pub fn from_sparse_embedding(
   values: List(Float),
   by indices: List(index),
-  thought sentiment: Impression,
 ) -> Tastoid(index) {
   list.zip(indices, values)
   |> taste.from_tuples
-  |> from_taste(worth: sentiment)
+  |> from_taste(worth: Yum)
 }

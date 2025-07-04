@@ -68,9 +68,37 @@ gleam run   # Run the project
 gleam test  # Run the tests
 ```
 
+### Benchmark
+
+While not my priority, it will be helpful to see how differeing implementations
+change performance (and its characteristics). To run the benchmarks, use the command:
+
+`gleam run -m bench`
+
+> $ gleam run -m bench
+>   Compiling tastoids
+>    Compiled in 0.20s
+>     Running bench.main
+> benching set d = 32, n = 128 t ⩐ t (blend)
+> benching set d = 64, n = 64 t ⩐ t (blend)
+> benching set d = 128, n = 32 t ⩐ t (blend)
+> benching set d = 256, n = 16 t ⩐ t (blend)
+> benching set d = 512, n = 8 t ⩐ t (blend)
+> benching set d = 1024, n = 4 t ⩐ t (blend)
+> benching set d = 2048, n = 2 t ⩐ t (blend)
+> Input               Function                       IPS           Min           P99          Mean
+> d = 32, n = 128     t ⩐ t (blend)            2633.7598        0.3593        0.4654        0.3796
+> d = 64, n = 64      t ⩐ t (blend)            1336.3796        0.7347        0.7661        0.7482
+> d = 128, n = 32     t ⩐ t (blend)            1312.5482        0.7474        0.7781        0.7618
+> d = 256, n = 16     t ⩐ t (blend)            1252.1695        0.7757        0.8384        0.7986
+> d = 512, n = 8      t ⩐ t (blend)            1114.2264        0.8539        1.2794        0.8974
+> d = 1024, n = 4     t ⩐ t (blend)            1177.7919        0.8013        1.3194        0.8490
+> d = 2048, n = 2     t ⩐ t (blend)            1511.6774        0.5881        1.1395        0.6615
+
 ### TODO
 
-- [ ] Write a euclidian and cosine distance fn.
+- [X] Write a euclidian and cosine distance fn.
+  - _See `tastoids/{length,distance}`, `tastoids.taste.{length,condense}`
 - [ ] Demonstrate how Tastoids + a vector db and iterative voting
       yield a form of simulated annealing towards the 'true' sentiment
       I was trying to express by voting things up/down.

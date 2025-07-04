@@ -87,6 +87,7 @@
 
 import gleam/float
 import gleam/int
+import gleam/set.{type Set}
 import tastoids/taste.{add, negate, scale}
 import tastoids/tastoid.{type Tastoid, Tasteless, Tastoid}
 
@@ -199,5 +200,26 @@ pub fn equal(t: Tastoid(index), u: Tastoid(index)) -> Bool {
       t == u
     }
     t, u -> equal(squash(t), squash(u))
+  }
+}
+
+/// Project a tastoid into a _Length-oid_ of sorts, condensing
+/// it into a 1-d tastoid indexed by the set of its indexes,
+/// and a value of its dimensions sum.
+pub fn length(of tastoid: Tastoid(space)) -> Tastoid(Set(space)) {
+  case tastoid {
+    Tasteless -> Tasteless
+    Tastoid(t, k) -> t |> taste.condense |> Tastoid(k)
+  }
+}
+
+/// Returns a Tastoid's _scalar_ value length, discarding its cardinality
+///
+/// nb. This doesn't _need_ to be a `length(of: tastoid)` result, and in
+///     fact they yield the same value over `distance(covered_by:)`
+pub fn distance(covered_by tastoid: Tastoid(space)) -> Float {
+  case tastoid {
+    Tasteless -> 0.0
+    Tastoid(t, _k) -> taste.length(t)
   }
 }
