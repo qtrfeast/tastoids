@@ -1,5 +1,5 @@
 name = "tastoids"
-version = "1.1.1"
+version = "1.2.0"
 description = "Tastoids are a uniform abstraction of 'taste' and Algebra thereof."
 licences = ["AGPL-3.0-only"]
  

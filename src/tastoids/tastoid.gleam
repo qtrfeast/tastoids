@@ -76,3 +76,13 @@ pub fn from_sparse_embedding(
   |> taste.from_tuples
   |> from_taste(worth: Yum)
 }
+
+/// Experimental: A (_quiet_) naive dense -> sparse
+/// mapper to facilitate experimentation
+/// (see `test/playground/fruit.gleam`)
+pub fn from_dense_embedding(values: List(Float)) {
+  values
+  |> list.index_map(with: fn(v, i) { #(i, v) })
+  |> taste.from_tuples
+  |> from_taste(worth: Yum)
+}
