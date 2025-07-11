@@ -1,10 +1,13 @@
 name = "tastoids"
-version = "1.2.0"
+version = "1.2.1"
 description = "Tastoids are a uniform abstraction of 'taste' and Algebra thereof."
 licences = ["AGPL-3.0-only"]
  
 repository = { type = "github", user = "avescodes", repo = "tastoids.gleam" }
 
+links = [
+  { title = "Intro à la Tufte", href = "http://tastoidea.qtr.fea.st"}
+]
 # links = [{ title = "Website", href = "" }]
 #
 # For a full reference of all the available options, you can have a look at

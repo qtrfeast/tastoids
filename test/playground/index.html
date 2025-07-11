@@ -1,0 +1,246 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <title>Tastoidea ⩐</title>
+  <link rel="stylesheet" href="https://unpkg.com/classless-tufte-css@1.3.0/tufte.min.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!--
+  <link rel="stylesheet" href="https://unpkg.com/@zumer/orbit@latest/dist/orbit.css">
+  <script src="https://unpkg.com/@zumer/orbit@latest/dist/orbit.js"></script>-->
+  <!-- Same size in Noto Sans Symbols 2: ●○⦿◍◎◌ -->
+  <style>
+     font-variant-emoji: text;
+    }
+    .gravity-spot {
+      --o-force: 200px;
+    }
+    .satellite {
+      border: 1px solid black;
+    }
+    tastoid[tasteless]::before { content: "∅"}
+    tastoid::before,
+    tastoid[in="colours"]::before,
+    tastoid[like]::before {
+      content: "●";
+    }
+    tastoid[dislike]::before { content: "○"; } 
+    tastoid[unlike]::before { content: "◍"}
+    tastoid[undislike]::before { content: "◌"}
+    tastoid[k=1]::after { content: "¹" }
+    tastoid[k=2]::after { content: "²" }
+    tastoid[k=3]::after { content: "³" }
+    tastoid[k=4]::after { content: "⁴" }
+    tastoid[k=5]::after { content: "⁵" }
+    tastoid[k=6]::after { content: "⁶" }
+    tastoid[k=7]::after { content: "⁷" }
+    tastoid[k=8]::after { content: "⁸" }
+    tastoid[k=9]::after { content: "⁹" }
+    tastoid[title=red] { color: red }
+    tastoid[title=orange] { color: orange}
+    tastoid[title=olive] { color: olive }
+    tastoid[title=yellow] { color: yellow }
+    tastoid[title=green] { color: green }
+    tastoid[title=lime] { color: lime  }
+    tastoid[title=navy] { color: navy }
+    tastoid[title=blue] { color: blue }
+    tastoid[title=indigo] { color: indigo }
+    tastoid[title=violet] { color: violet }
+    tastoid[title=teal] { color: teal }
+    tastoid[title=aqua] { color: aqua }
+    tastoid[title=purple] { color: purple }
+    tastoid[title=fuschia] { color: fuschia }
+    .tasty { font-size: 1.6rem; }
+    figure.tasty { margin: 0 0 .3rem 0; padding-left: 2rem; font-size: 1.6em; }
+  </style>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Symbols+2&display=swap');
+
+    tastoid {
+      font-family: "Noto Sans Symbols 2",et-book,Palatino,"Palatino Linotype","Palatino LT STD","Book Antiqua",Georgia,serif;
+    }
+  </style>
+</head>
+
+<body>
+  <article>
+    <h1>Tastoids ⩐ </h1>
+    <p>↪ an Algebra of Taste</p>
+    <br>
+
+    <section>
+      <blockquote>
+        <p class=tasty >That's like comparing <em>apples</em> to <em>oranges!</em></p>
+        <footer>𝕎: <a href="https://en.wikipedia.org/wiki/Apples_and_oranges">Apples & Oranges</a></footer>
+      </blockquote>
+      <p>
+        As the age old adage goes, <em>you can't compare apples to oranges.</em>
+      </p>
+      <aside>
+        Whether in comparing items, taste, preferences, "vibes" or <em>matters of the heart</em>.
+      </aside>
+      <p>
+        While perhaps not meant to be taken <em>literally</em>, it is 
+        oft' posed in a playful nod to the nuance it <strong><em>requires</em></strong>.
+      </p>
+
+      <p>
+        And what then if you <em>do</em>? Not by <em>erasing</em> or otherwise minimizing their differences, but rather by <em>honouring</em> them?
+      </p>
+    </section>
+
+    <section>
+      <h2>A Matter of <strong>Taste</strong></h2>
+      <p>It is challenging to argue we don't live in <em>interesting times</em>.</p>
+      <aside>Where "interesting" can be taken to mean... <em>"<a href="https://en.wikipedia.org/wiki/May_you_live_in_interesting_times">troubling</a>"</em></aside>
+      <p>Our preferences and activities are harvested, ranked, or I daresay even weaponized—the very essence of <em>free-choice</em> thwarted by systems we neither see nor control.</p>
+      <p>Despite that: <em>You know what you <strong>like</strong> & you know what you <strong>don't</strong>.</em> </p>
+      <p>As powerful as the <em>algorithmic</em> meddling we face day-to-day is, it is merely a shadow of the true <em>shape</em> of <strong>your</strong> taste (𝕥).</p>
+      <h3>↪ Your Tastoid</h3>
+      <p><strong>Tastoids</strong> (𝕋) –as they were–turn this algorithm inside-out.</p>
+      <aside>
+        <dt>tas·toid /tāstˌtoid/</dt>
+        <dd>adjective</dd>
+        <dd>1. having or resembling the shape of a <em>taste</em></dd>
+      </aside>
+      <p> The mere expression of taste is in and of itself a <em>deliciously simple</em> snapshot ready to blend, compare, retract and combine, entirely offline, ad-hoc and within your control–all utterly yours.</p>
+    </section>
+
+    <section>
+      <h2>Tastoids, in Colour</h2>
+      <p>Take for instance, the set of all <em>"colour"</em> Tastoids:</p>
+      <figure class=tasty>
+        <strong>𝕋(colour)</strong> = ⟦
+          <tastoid in=colours title=red ></tastoid>
+          <tastoid in=colours title=orange ></tastoid>
+          <tastoid in=colours title=yellow ></tastoid>
+          <tastoid in=colours title=green ></tastoid>
+          <tastoid in=colours title=blue ></tastoid>
+          <tastoid in=colours title=purple ></tastoid>
+          <tastoid in=colours title=indigo ></tastoid>
+        , ⋯ ⟧ 
+      </figure>
+      <aside>Plus about 255³ more <em>RGB</em> colours!</aside>
+      <aside>In full, a Tastoid 𝕥 of <tastoid></tastoid>, whether a like, dislike or otherwise, is more completely written as:<br> 𝕥 = { <tastoid></tastoid> }¹<br><br>Singular tastoids such as these can be said to have a <strong>length = 1</strong></aside>
+      <p>
+        Each <tastoid></tastoid> expresses a single <strong>like</strong> of that colour, while <tastoid dislike></tastoid> expresses a <strong>dislike</strong>.
+      </p>
+      <figure class=tasty>
+        <strong>dis</strong> :  <tastoid like></tastoid> → <tastoid dislike></tastoid> and <tastoid dislike></tastoid> → <tastoid like></tastoid>
+      </figure>
+      <p>Crucially𐞁 while <tastoid like></tastoid> & <tastoid dislike></tastoid> express a sentiment, their counterparts–<em>unlike</em> <tastoid unlike ></tastoid> and <em>undislike</em> <tastoid undislike ></tastoid>–otherwise <em>un-express</em> the same, such that:</p>
+      <aside>𐞁Case in point: the average of some numbers is 42, <em>what the average of those numbers less a 13?</em></aside>
+      <figure class=tasty>
+        <strong>un</strong> :  <tastoid like></tastoid> ⇆  <tastoid unlike></tastoid>
+        and
+        <tastoid dislike></tastoid>  ⇆  <tastoid undislike></tastoid>
+      </figure>
+      <h3>But will they <strong>Blend?</strong></h3>
+      <p>Although we can't compare <em>apples</em> to <em>oranges</em>, it is about time that we answered the question: what is <tastoid in=colours title=red></tastoid> <em>"plus"</em> <tastoid in=colours title=orange></tastoid>?</p>
+      <p>
+        Just as in real-life, <tastoid in=colours title=red></tastoid> ≠  <tastoid in=colours title=orange></tastoid>.
+      </p>
+
+      <p>While we cannot "add" tastoids, we can certainly <em>blend</em>/⩐ them.</p>
+
+      <figure class=tasty>
+        <strong>blend</strong> :
+        <tastoid in=colours title=red></tastoid> ⩐ <tastoid in=colours title=orange></tastoid>
+         → {<tastoid in=colours title=red></tastoid>,<tastoid in=colours title=orange></tastoid>}²
+      </figure>
+
+      <p><em>Unlike</em> a real-life <em>blender</em>, are not only willing to <em>blend</em>, but also <em>unblend</em>!</p>
+
+      <aside>In fact, taking <em>"13 from ‖x‖ = 42"</em> is not only possible in an Algebra of Taste, but <em>encouraged</em>.</aside>
+
+      <figure class=tasty>
+       {<tastoid in=colours title=red></tastoid>,<tastoid in=colours title=orange></tastoid> }² ⩐ <tastoid unlike in=colours title=red></tastoid>            
+
+ →      <tastoid in=colours title=orange></tastoid>
+        <br>
+       {<tastoid in=colours title=red></tastoid>,<tastoid in=colours title=orange></tastoid> }² ⩐ <tastoid unlike in=colours title=orange></tastoid>         
+
+ →      <tastoid in=colours title=red></tastoid>
+        <br> <em> or even … </em> <br>
+       {<tastoid in=colours title=red></tastoid>,<tastoid in=colours title=orange></tastoid> }² ⩐ <tastoid undislike in=colours title=red></tastoid>      → {<tastoid in=colours title=red></tastoid><tastoid in=colours title=red></tastoid>,  <tastoid in=colours title=orange></tastoid>}¹       </figure>
+        <p>
+          While <tastoid></tastoid> and <tastoid unlike></tastoid> blend to ∅, blending <tastoid></tastoid> with its <tastoid dislike ></tastoid> or <tastoid undislike ></tastoid> yields curious results; a <em>naked</em> doubling of its scalar weight or value, but not both! 
+         </p>
+      
+    </section>
+
+    <section>
+      <h2>A Measure of Taste</h2>
+      <p>Up to now, I've only hinted at matters of <em>length</em>, <em>equality</em>, <em>distance</em> and <em>averages</em> in the universe of tastoids.</p>
+
+      <h3>On Length & Equality</h3>
+        <p>The length of a tastoid is its total number of elements:</p>
+        <figure class=tasty>
+          <strong>length</strong> :
+            { <tastoid title="blue"></tastoid><tastoid title=blue ></tastoid><tastoid title=blue></tastoid> } → 3
+          </figure>
+       <p>You may have gathered that tastoids can be <em>different</em>, but remain the same.</p>
+       <p>A taste is strictly equal to itself, <tastoid></tastoid> = <tastoid></tastoid>, but <tastoid></tastoid> ≠ <tastoid dislike ></tastoid>.</p>
+       <p>While the latter are not equal, they do share the same length and as such are <em>congruent</em> where <tastoid></tastoid> ≅ <tastoid dislike ></tastoid> ≅ <tastoid unlike ></tastoid> ≅ <tastoid undislike ></tastoid>, all sharing a length = 1ⁱ</p>
+
+      <aside>
+        <p>ⁱ And you thought this wouldn't get <em><a href="https://en.wikipedia.org/wiki/Complex_number">complex</a></em>.</p>
+        <p> In fact, each of the cardinal <em>varieties</em> share an intimate symmetry with a period of four when rotated through the complex plane (aka ℤ/4)</p>
+        <p class=tasty style="padding: 0.5rem;">↪ <tastoid like ></tastoid> → <tastoid dislike ></tastoid> → <tastoid unlike ></tastoid> → <tastoid undislike ></tastoid> → <tastoid></tastoid> → … </p>
+      </aside>
+
+      <h3>A Tastoids Congreuncies</h3>
+      <p>Perhaps most importantly, Tastoids behave like triangles ⟁  in that a 1m and 10m isosceles triangle may not be equal, they are powerfully <em>congruent</em></p>
+      <p>Similarly no matter their quantity, every tastoid when <em>squashed</em> is congruent to its "other" sizes, à la  <tastoid></tastoid> ≅ { <tastoid></tastoid> <tastoid></tastoid> } ≅ { <tastoid></tastoid> <tastoid></tastoid> <tastoid></tastoid> } ≅ …, each sharing an <em>average</em> length = 1</p>
+
+      <h3>Distance → Preference</h3>
+      <blockquote>
+        <p class=tasty>In wide world of taste,<br> &nbsp; what is <strong>distance</strong> if not a measure of <strong>preference</strong>?</p>
+      </blockquote>
+      <p>As promised, something magical is about to happen…</p>
+
+      <p>
+        In comparing how "far away" your tastoid is from another–whether to the
+        <em>unit</em> colours, or to <em>anothers' tastoid</em>–you take a lense
+        to that universe; things you like are drawn closer, while those you don't
+        are pushed further away.
+      </p>
+
+      <p>Your perspective here is quite magical. <em>The object (<tastoid></tastoid>) IS the algorithm.</em></p>
+
+      <h3>Order amid Chaos</h3>
+      <p>Any tastoid's <em>average</em> defines a complete and total ordering (⪦) of every one of its 'neighbour' or tastable 'unit'.</p>
+      <figure class=tasty>
+        { <tastoid title="red"></tastoid><tastoid title="blue"></tastoid> } ⪦ 𝕋(colour) <br>
+        ↪ { <tastoid title="red"></tastoid><tastoid title="blue"></tastoid> } (0 away), 
+<tastoid title="red"></tastoid> (½), <tastoid title="blue"></tastoid> (½), <tastoid title="purple"></tastoid> (1), <tastoid title=green></tastoid> (1), … 
+      </figure>
+
+      <p>A crude approximation for small tastoids, however as your own tastoids grow their algebra edge closer and closer to your <em>true</em> taste. A recommendation system, portable, local & entirely yours.</p>
+      
+    </section>
+
+    <section>
+      <h2>Your Favourite Color</h2>
+      <p>Try it yourself: pick some of your favourite ⬤ and see your ⪦ change.</p>
+      <p><em> Stay tuned ... </em></p>
+    </section>
+
+    <section>
+      <h3>In Summary</h3>
+      <p>Tastoids generalize preference itself.</p>
+
+      <p>Not only can they sort and order colours, but anything from movies & tv, to restaurants, to ideas, or even <em>potential partners</em>.</p>
+      <blockquote>
+      <p>Where there is taste, there are Tastoids.</p>
+      </blockquote>
+      <p><tastoid title=green></tastoid> &nbsp; Interested in funding or research collaboration? <a href="mailto:hello@aquinn.ca">Get in touch</a>.</p>
+      <footer> Crafted with Love in Winnipeg, Canada <br> ⩐  Avery Quinn, 2025</footer>
+    </section>
+
+  </article>
+</body>
+
+</html>
