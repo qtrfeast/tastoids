@@ -6,7 +6,7 @@ licences = ["AGPL-3.0-only"]
 repository = { type = "github", user = "avescodes", repo = "tastoids.gleam" }
 
 links = [
-  { title = "Intro à la Tufte", href = "http://tastoidea.qtr.fea.st"}
+  { title = "Intro a la Tufte", href = "http://tastoidea.qtr.fea.st"}
 ]
 # links = [{ title = "Website", href = "" }]
 #
