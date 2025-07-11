@@ -8,6 +8,8 @@
 
 import gleam/list
 import gleam/option.{type Option, None, Some}
+import gleam/string
+import tastoids
 import tastoids/tastoid.{type Tastoid}
 
 pub type Fruitoid =
@@ -22,6 +24,22 @@ pub fn to_fruitoid(a fruit: String) -> Fruitoid {
     Some(characteristics) -> tastoid.from_dense_embedding(characteristics)
     None -> tastoid.Tasteless
   }
+}
+
+import gleam/float
+
+pub fn taste_for_fruits(
+  prefers tastoid: Fruitoid,
+  from fruit_names: List(String),
+) {
+  let profile =
+    fruit_names
+    |> list.map(with: fn(fruit) {
+      let fruitoid = to_fruitoid(fruit)
+      let distance = tastoids.less(tastoid, fruitoid) |> tastoids.distance
+      string.append(fruit, ":") |> string.append(float.to_string(distance))
+    })
+  profile
 }
 
 /// A list of fruit names which have embeddings pre-computed.

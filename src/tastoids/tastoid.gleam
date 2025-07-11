@@ -1,5 +1,3 @@
-import gleam/list
-import tastoids/imbedding.{type Imbedding}
 import tastoids/taste.{type Taste, negate, scale}
 
 /// A `Tastoid` (𝕥) is an element within a subset of Tastoids (𝕋),
@@ -11,7 +9,7 @@ pub type Tastoid(of) {
   // EmptyTastoid(taste: Taste(index))
   /// An impression (or aggregation) of taste
   /// e.g. Tastoid(t) -> Tastoids(t, 1)
-  Tastoid(taste: Taste(of), cardinality: Int)
+  Tastoid(taste: Taste, cardinality: Int)
 }
 
 /// Coerce a `thing` of an into a `Tastoid`, assuming...
@@ -25,8 +23,8 @@ pub type Tastoid(of) {
 ///
 ///     "from" |> tastoid.from -> Tastoid(Taste("from", 1.0"), k=1) 
 ///     42     |> tastoid.from -> Tastoid(Taste(42, 1.0), k=1)
-pub fn from(thing index: Imbedding(space)) -> Tastoid(Imbedding(space)) {
-  taste.from_one(of: index) |> Tastoid(1)
+pub fn from(thing name: String) -> Tastoid(String) {
+  taste.from_one(of: name) |> Tastoid(1)
 }
 
 pub type Impression {
@@ -45,7 +43,7 @@ pub type Impression {
 /// A _tasting_ of a taste and the impression thereof (e.g. a 'weight'
 /// or _value-multiplier_) yield a Tastoid of cardinality (k=1).
 pub fn from_taste(
-  of taste: Taste(index),
+  of taste: Taste,
   worth impression: Impression,
 ) -> Tastoid(index) {
   case impression {
@@ -60,20 +58,19 @@ pub fn from_taste(
 /// Given any index (`string`, `Int`, or `Set(index)``), coerce it into
 /// a simple Tastoid worth a single contribution (k=1)
 pub fn from_impression(
-  of index: index,
+  of thing: String,
   worth sentiment: Impression,
-) -> Tastoid(index) {
-  taste.from_one(of: index) |> from_taste(worth: sentiment)
+) -> Tastoid(String) {
+  taste.from_one(of: thing) |> from_taste(worth: sentiment)
 }
 
 /// Coerce a sparse/dense embeddings pair of value and index lists
 /// into a conjugated Tastoid worth a single contribution (k=1)
 pub fn from_sparse_embedding(
   values: List(Float),
-  by indices: List(index),
-) -> Tastoid(index) {
-  list.zip(indices, values)
-  |> taste.from_tuples
+  by indices: List(Int),
+) -> Tastoid(Int) {
+  taste.from_sparse_embedding(values, by: indices)
   |> from_taste(worth: Yum)
 }
 
@@ -82,7 +79,6 @@ pub fn from_sparse_embedding(
 /// (see `test/playground/fruit.gleam`)
 pub fn from_dense_embedding(values: List(Float)) {
   values
-  |> list.index_map(with: fn(v, i) { #(i, v) })
-  |> taste.from_tuples
+  |> taste.from_dense_embedding
   |> from_taste(worth: Yum)
 }

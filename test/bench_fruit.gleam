@@ -18,7 +18,8 @@ pub fn main() -> Nil {
     [
       bench.SetupFunction("|> reduce(blend)", fn(n) {
         let fruits = fruit.sample(n)
-        io.println("Blending fruits")
+        io.println("Blending fruits...")
+
         let _ = fruits |> echo
         let _ = fruits |> list.length |> echo
 
@@ -49,6 +50,6 @@ pub fn main() -> Nil {
     ],
     [bench.Duration(3000), bench.Warmup(100)],
   )
-  |> bench.table([bench.IPS, bench.Min, bench.P(99), bench.Mean])
+  |> bench.table([bench.IPS, bench.Min, bench.Max, bench.Mean, bench.SD])
   |> io.println()
 }

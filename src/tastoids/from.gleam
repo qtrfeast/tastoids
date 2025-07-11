@@ -6,28 +6,28 @@ import tastoids/tastoid.{
 }
 
 /// Coerce any `index` into a simple `Tastoid` with a positive sentiment
-pub fn like(this index: index) -> Tastoid(index) {
-  from_impression(of: index, worth: Yum)
+pub fn like(this thing: String) -> Tastoid(String) {
+  from_impression(of: thing, worth: Yum)
 }
 
 /// Coerce any `index` into a simple `Tastoid` with a negative sentiment
-pub fn dislike(this index: index) -> Tastoid(index) {
-  from_impression(of: index, worth: Yuck)
+pub fn dislike(this thing: String) -> Tastoid(String) {
+  from_impression(of: thing, worth: Yuck)
 }
 
 /// Coerce any `index` into a simple `Tastoid` with a weak negative sentiment.
-pub fn meh(this index: index) -> Tastoid(index) {
-  from_impression(of: index, worth: Meh)
+pub fn meh(this thing: String) -> Tastoid(String) {
+  from_impression(of: thing, worth: Meh)
 }
 
 /// Coerce any `index` into a simple `Tastoid` with a specific worth
 /// (weight coefficient/multiplier for `this`'s value)
-pub fn saw(this index: index, worth weight: Float) -> Tastoid(index) {
-  from_impression(of: index, worth: Saw(weight))
+pub fn saw(this thing: String, worth weight: Float) -> Tastoid(String) {
+  from_impression(of: thing, worth: Saw(weight))
 }
 
 /// Coerce any `index` into a simple `Tastoid` with no sentiment or
 /// contribution (the empty tastoid/`Insipoid`)
-pub fn pass(this index: index) -> Tastoid(index) {
-  from_impression(of: index, worth: Pass)
+pub fn pass(this thing: String) -> Tastoid(String) {
+  from_impression(of: thing, worth: Pass)
 }
