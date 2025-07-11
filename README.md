@@ -5,12 +5,11 @@
 
 A _Temperate_, Terse ***Algebra of Taste***
 
-
 ## Wait, _What_?
 
 > Tastoids & their Algebra... are like comparing 'Apples' to 'Oranges'
 
-- [ ] Write a bit more of an introduction here.
+See [Intro à la Tufte](http://tastoidea.qtr.fea.st/) for a _colouful_ introduction.
 
 ## Give them a Taste
 
